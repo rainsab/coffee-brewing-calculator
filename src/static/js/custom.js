@@ -10,14 +10,10 @@ beans.addEventListener('input', function(event) {
     
     if(change === 'water' || sameChange === 'water') {
         ratio.value = water.value / beans.value;
-        yield.value = 0.9 * water.value;
     }
     if(change === 'ratio' || sameChange === 'ratio') {
         water.value = beans.value * ratio.value;
         yield.value = 0.9 * water.value;
-    }
-    if(change === 'yield' || sameChange === 'yield') {
-        water.value = yield.value * 1.11 * 1.001;
     }
 
     if(change !== 'beans') {
@@ -30,17 +26,11 @@ beans.addEventListener('input', function(event) {
 })
 
 water.addEventListener('input', function(event) {
-    
+    yield.value = 0.9 * water.value;
     if(change === 'beans' || sameChange === 'beans') {
-        ratio.value = water.value / beans.value;
-        yield.value = 0.9 * water.value;
+        ratio.value = water.value / beans.value;     
     }
     if(change === 'ratio' || sameChange === 'ratio') {
-        beans.value = water.value / ratio.value;
-        yield.value = 0.9 * water.value;
-    }
-    if(change === 'yield' || sameChange === 'yield') {
-        water.value = yield.value * 1.11 * 1.001;
         beans.value = water.value / ratio.value;
     }
     
@@ -59,10 +49,6 @@ ratio.addEventListener('input', function(event) {
     }
     if(change === 'water' || sameChange === 'water') {
         beans.value = water.value / ratio.value;
-        yield.value = 0.9 * water.value;
-    }
-    if(change === 'yield' || sameChange === 'yield') {
-        beans.value = water.value / ratio.value;
     }
 
     if(change !== 'ratio') {
@@ -72,25 +58,28 @@ ratio.addEventListener('input', function(event) {
 })
 
 yield.addEventListener('input', function(event) {
-    
+    water.value = yield.value / 0.9;
     if(change === 'beans' || sameChange === 'beans') {
-        water.value = yield.value * 1.1111111111111111;
         ratio.value = water.value / beans.value;
     }
-    if(change === 'water' || sameChange === 'water') {
-        water.value = yield.value * 1.1111111111111111;
-        beans.value = water.value / ratio.value;
-    }
     if(change === 'ratio' || sameChange === 'ratio') {
-        water.value = yield.value * 1.1111111111111111;
         beans.value = water.value / ratio.value;
     }
 
-    if(change !== 'yield') {
+    if(change !== 'water') {
         sameChange = change;
-        change = 'yield';
+        change = 'water';
     }  
 })
+
+const num = 13.574356;
+const result = num.toFixed(2);
+console.log(result); // 13.57
+console.log(typeof result); // string
+
+const final = parseFloat(result);
+console.log(final); // 13.57
+console.log(typeof final); // number
 
 //beans.value = water.value / ratio.value;
 //water.value = beans.value * ratio.value;
