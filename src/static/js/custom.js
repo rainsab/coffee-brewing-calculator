@@ -6,18 +6,18 @@ let yield = document.getElementById('yield');
 let change;
 let sameChange;
 
-function numRounded(num) {
+function roundNum(num) {
     return Math.round(num * 100) / 100;
 }
 
 beans.addEventListener('input', function (event) {
 
     if (change === 'water' || sameChange === 'water') {
-        ratio.value = numRounded(water.value / beans.value);
+        ratio.value = roundNum(water.value / beans.value);
     }
     if (change === 'ratio' || sameChange === 'ratio') {
-        water.value = numRounded(beans.value * ratio.value);
-        yield.value = numRounded(0.9 * water.value);
+        water.value = roundNum(beans.value * ratio.value);
+        yield.value = roundNum(0.9 * water.value);
     }
 
     if (change !== 'beans') {
@@ -28,13 +28,13 @@ beans.addEventListener('input', function (event) {
 
 water.addEventListener('input', function (event) {
 
-    yield.value = numRounded(0.9 * water.value);
+    yield.value = roundNum(0.9 * water.value);
 
     if (change === 'beans' || sameChange === 'beans') {
-        ratio.value = numRounded(water.value / beans.value);
+        ratio.value = roundNum(water.value / beans.value);
     }
     if (change === 'ratio' || sameChange === 'ratio') {
-        beans.value = numRounded(water.value / ratio.value);
+        beans.value = roundNum(water.value / ratio.value);
     }
 
     if (change !== 'water') {
@@ -46,11 +46,11 @@ water.addEventListener('input', function (event) {
 ratio.addEventListener('input', function (event) {
 
     if (change === 'beans' || sameChange === 'beans') {
-        water.value = numRounded(beans.value * ratio.value);
-        yield.value = numRounded(0.9 * water.value);
+        water.value = roundNum(beans.value * ratio.value);
+        yield.value = roundNum(0.9 * water.value);
     }
     if (change === 'water' || sameChange === 'water') {
-        beans.value = numRounded(water.value / ratio.value);
+        beans.value = roundNum(water.value / ratio.value);
     }
 
     if (change !== 'ratio') {
@@ -61,13 +61,13 @@ ratio.addEventListener('input', function (event) {
 
 yield.addEventListener('input', function (event) {
 
-    water.value = numRounded(yield.value / 0.9);
+    water.value = roundNum(yield.value / 0.9);
 
     if (change === 'beans' || sameChange === 'beans') {
-        ratio.value = numRounded(water.value / beans.value);
+        ratio.value = roundNum(water.value / beans.value);
     }
     if (change === 'ratio' || sameChange === 'ratio') {
-        beans.value = numRounded(water.value / ratio.value);
+        beans.value = roundNum(water.value / ratio.value);
     }
 
     if (change !== 'water') {
