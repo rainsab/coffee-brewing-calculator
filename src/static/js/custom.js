@@ -2,11 +2,29 @@ let beans = document.getElementById('beans');
 let ratio = document.getElementById('ratio');
 let water = document.getElementById('water');
 let yield = document.getElementById('yield');
+
 let timer = document.getElementById('timer');
 let timerTransfer = document.getElementById('timer-transfer');
+let btnStart = document.getElementById('start');
+let btnStop = document.getElementById('stop');
+let btnReset = document.getElementById('reset');
 
 let change;
 let sameChange;
+let time = timer.value * 60;
+
+//setInterval(countdown, 1000);
+
+function countdown() {
+    let minutes = Math.floor(time / 60);
+    let seconds = time % 60;
+
+    seconds = seconds < 10 ? '0' + seconds : seconds;
+    timerTransfer.value = `${minutes}:${seconds}`;
+    //time--;
+}
+countdown();
+timer.addEventListener('input', countdown);
 
 function roundNum(num) {
     return Math.round(num * 100) / 100;
