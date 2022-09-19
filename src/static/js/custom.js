@@ -2,7 +2,6 @@ let beans = document.getElementById('beans');
 let ratio = document.getElementById('ratio');
 let water = document.getElementById('water');
 let yield = document.getElementById('yield');
-let timer = document.getElementById('timer');
 
 let change;
 let sameChange;
@@ -77,6 +76,7 @@ yield.addEventListener('input', function (event) {
     }
 })
 
+let timer = document.getElementById('timer');
 let timerTransfer = document.getElementById('timer-transfer');
 let btnStart = document.getElementById('start');
 let btnStop = document.getElementById('stop');
@@ -110,14 +110,46 @@ function countdown() {
 timer.addEventListener('input', initialNum);
 initialNum();
 
+let progressPerc;
+let progressInterval;
+
+function progressWidth() {
+    document.getElementById('progressbar').style.width = progressPerc + '%';
+    document.getElementById('progressbar').ariaValueNow = progressPerc;
+}
+
+function progress() { 
+    progressPerc += 100 / (timer.value * 60);
+    progressWidth();
+    if (progressPerc >= 100) {
+        clearInterval(progressInterval);
+    }
+}
+
+function initialProgress() {
+    clearInterval(progressInterval);
+    progressPerc = 0;
+    progressWidth();
+}
+
 btnStart.addEventListener('click', function() {
     if (time > 0) {
+        progressPerc += 100 / (timer.value * 60);
+        progressWidth();
         interval = setInterval(countdown, 1000);
+        progressInterval = setInterval(progress, 1000);
     }
 })
 
 btnStop.addEventListener('click', function() {
     clearInterval(interval);
+    clearInterval(progressInterval);
 })
 
-btnReset.addEventListener('click', initialNum);
+btnReset.addEventListener('click', function() {
+    initialNum();
+    initialProgress();
+});
+
+timer.addEventListener('input', initialProgress);
+initialProgress();

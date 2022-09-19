@@ -1418,7 +1418,7 @@
     // $progress-bar-color: $white; $progress-bar-color: $progress-bar-color !global; // $white
     // $progress-bar-bg: $primary; $progress-bar-bg: $progress-bar-bg !global; // $primary
     // $progress-bar-animation-timing: 1s linear infinite; $progress-bar-animation-timing: $progress-bar-animation-timing !global; // 1s linear infinite
-    // $progress-bar-transition: width .6s ease; $progress-bar-transition: $progress-bar-transition !global; // width .6s ease
+    $progress-bar-transition: width 1s linear; $progress-bar-transition: $progress-bar-transition !global; // width .6s ease
 
 
     // List group
