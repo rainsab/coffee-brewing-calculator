@@ -1,7 +1,7 @@
-let beans = document.getElementById('beans');
-let ratio = document.getElementById('ratio');
-let water = document.getElementById('water');
-let yield = document.getElementById('yield');
+const beans = document.getElementById('beans');
+const ratio = document.getElementById('ratio');
+const water = document.getElementById('water');
+const yield = document.getElementById('yield');
 
 let change;
 let sameChange;
@@ -76,14 +76,14 @@ yield.addEventListener('input', function (event) {
     }
 })
 
-let timer = document.getElementById('timer');
-let timerTransfer = document.getElementById('timer-transfer');
-let btnStart = document.getElementById('start');
-let btnStop = document.getElementById('stop');
-let btnReset = document.getElementById('reset');
+const timer = document.getElementById('timer');
+const timerTransfer = document.getElementById('timer-transfer');
+const btnStart = document.getElementById('start');
+const btnStop = document.getElementById('stop');
+const btnReset = document.getElementById('reset');
 
 let time;
-let interval;
+let intervalTime;
 
 function transferNum() {
     let minutes = Math.floor(time / 60);
@@ -94,7 +94,7 @@ function transferNum() {
 }
 
 function initialNum() {
-    clearInterval(interval);
+    clearInterval(intervalTime);
     time = timer.value * 60;
     transferNum();
 }
@@ -103,7 +103,7 @@ function countdown() {
     time--;
     transferNum();
     if (time === 0) {
-        clearInterval(interval);
+        clearInterval(intervalTime);
     }
 }
 
@@ -116,6 +116,7 @@ let progressInterval;
 function progressWidth() {
     document.getElementById('progressbar').style.width = progressPerc + '%';
     document.getElementById('progressbar').ariaValueNow = progressPerc;
+    //console.log(progressPerc)
 }
 
 function progress() { 
@@ -133,16 +134,16 @@ function initialProgress() {
 }
 
 btnStart.addEventListener('click', function() {
-    if (time > 0) {
+    if (time > 0 && time <= 100) {
         progressPerc += 100 / (timer.value * 60);
         progressWidth();
-        interval = setInterval(countdown, 1000);
+        intervalTime = setInterval(countdown, 1000);
         progressInterval = setInterval(progress, 1000);
     }
 })
 
 btnStop.addEventListener('click', function() {
-    clearInterval(interval);
+    clearInterval(intervalTime);
     clearInterval(progressInterval);
 })
 
@@ -153,3 +154,25 @@ btnReset.addEventListener('click', function() {
 
 timer.addEventListener('input', initialProgress);
 initialProgress();
+
+const localTime = new Date();
+console.log(localTime.getHours());
+
+if (localTime.getHours() < 7) {
+    document.getElementById('before-sunrise').style.display = 'block';
+} else if (localTime.getHours() < 10) {
+    document.getElementById('after-sunrise').style.display = 'block';
+} else if (localTime.getHours() < 16) {
+    document.getElementById('during-day').style.display = 'block';
+} else if (localTime.getHours() < 19) {
+    document.getElementById('before-sunset').style.display = 'block';
+} else {
+    document.getElementById('after-sunset').style.display = 'block';
+}
+
+
+//0:00 - 7:00 ⚠️ You should wait few hours after getting up before making the first cup of coffee.
+//7:00 - 10:00 ☕ Just now it's an ideal time to have a coffee.
+//10:00 - 16:00 ☕ You're fine having a coffee now.
+//16:00 - 19:00 ⚠️ Beware, you shouldn't drink coffee at least 6 hours before sleep.
+//19:00 - 24:00 ❌ It's already night, you definitely shouldn't be drinking coffee now.
