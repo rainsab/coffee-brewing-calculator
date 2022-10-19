@@ -1,6 +1,6 @@
 # Coffee brewing calculator
 
-Website for fictive cafe created using HTML, Sass, Bootstrap and Nunjucks, based on a template from Figma.
+Web application for making coffee including stopwatch and information getting from API. Whole project was created using JavaScript, HTML, Sass, Bootstrap and Nunjucks.
 
 See in action https://rainsab-cbc.surge.sh/
 
