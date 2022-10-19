@@ -1,78 +1,87 @@
-{% extends '_base.njk' %}
-
-
-{% block content %}  
-    <main class="container">
-    <h1>Coffee brewing calculator</h1>
-        <div class="row mb-3">
-            <div class="col">
-                <div class="group">
-                    <label for="beans">Coffee beans</label>
-                    <input type='number' id="beans" value="8" min=''><span class="ps-1">g</span>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" href="index.css"/>
+        <title>
+            {% block title %}Coffee Brewing Calculator{% endblock %}
+        </title>
+    </head>
+    <body>
+        <main class="container">
+        <h1>Coffee brewing calculator</h1>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="group">
+                        <label for="beans">Coffee beans</label>
+                        <input type='number' id="beans" value="8" min=''><span class="ps-1">g</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col">
-                <div class="group">
-                    <label for="water">Water</label>
-                    <input type='number' id="water" value="128" min=''><span class="ps-1">ml</span>
+                <div class="col">
+                    <div class="group">
+                        <label for="water">Water</label>
+                        <input type='number' id="water" value="128" min=''><span class="ps-1">ml</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col">
-                <div class="group">
-                    <label for="ratio">Ratio</label>
-                    <input type='number' id="ratio" value="16" min=''><span class="ps-1">: 1</span>
+                <div class="col">
+                    <div class="group">
+                        <label for="ratio">Ratio</label>
+                        <input type='number' id="ratio" value="16" min=''><span class="ps-1">: 1</span>
+                    </div>
                 </div>
-            </div>
 
-            <div class="col">
-                <div class="group">
-                    <label for="yield">Coffee yield</label>
-                    <input type='number' id="yield" value="115.2" min=''><span class="ps-1">ml</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mb-3">
-            <div class="col">
-                <div class="group">
-                    <label for="timer">Timer</label>
-                    <input type='number' id="timer" value="0.1" min='0'><span class="ps-1">min</span>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="group input-group">
-                    <label for="timer-transfer"></label>
-                    <input disabled type='text' id="timer-transfer">
-                        <div class="buttons">
-                            <button type="button" id="start" class="btn btn-success">Start</button>
-                            <button type="button" id="stop" class="btn btn-danger">Stop</button>
-                            <button type="button" id="reset" class="btn btn-dark">Reset</button>
-                        </div>
-                </div>
-            </div>
-
-            <div class="col">
-                <div class="group">
-                    <div class="progress" style="height: 30px;">       
-                        <div id="progressbar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                <div class="col">
+                    <div class="group">
+                        <label for="yield">Coffee yield</label>
+                        <input type='number' id="yield" value="115.2" min=''><span class="ps-1">ml</span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
-                <div class="group">
-                    <div id="before-sunrise" class="alert alert-warning" role="alert">⚠️ You should wait few hours after getting up before making the first cup of coffee.</div>
-                    <div id="after-sunrise" class="alert alert-success" role="alert">☕ Just now it's an ideal time to have a coffee.</div>
-                    <div id="during-day" class="alert alert-info" role="alert">☕ You're fine having a coffee now.</div>
-                    <div id="before-sunset" class="alert alert-warning" role="alert">⚠️ Beware, you shouldn't drink coffee at least 6 hours before sleep.</div>
-                    <div id="after-sunset" class="alert alert-danger" role="alert">❌ It's already night, you definitely shouldn't be drinking coffee now.</div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="group">
+                        <label for="timer">Timer</label>
+                        <input type='number' id="timer" value="0.1" min='0'><span class="ps-1">min</span>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="group input-group">
+                        <label for="timer-transfer"></label>
+                        <input disabled type='text' id="timer-transfer">
+                            <div class="buttons">
+                                <button type="button" id="start" class="btn btn-success">Start</button>
+                                <button type="button" id="stop" class="btn btn-danger">Stop</button>
+                                <button type="button" id="reset" class="btn btn-dark">Reset</button>
+                            </div>
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="group">
+                        <div class="progress" style="height: 30px;">       
+                            <div id="progressbar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
-{% endblock %}
+
+            <div class="row">
+                <div class="col">
+                    <div class="group">
+                        <div id="before-sunrise" class="alert alert-warning" role="alert">⚠️ You should wait few hours after getting up before making the first cup of coffee.</div>
+                        <div id="after-sunrise" class="alert alert-success" role="alert">☕ Just now it's an ideal time to have a coffee.</div>
+                        <div id="during-day" class="alert alert-info" role="alert">☕ You're fine having a coffee now.</div>
+                        <div id="before-sunset" class="alert alert-warning" role="alert">⚠️ Beware, you shouldn't drink coffee at least 6 hours before sleep.</div>
+                        <div id="after-sunset" class="alert alert-danger" role="alert">❌ It's already night, you definitely shouldn't be drinking coffee now.</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    <script src="/js/custom.js"></script>
+    </body>
+</html>
