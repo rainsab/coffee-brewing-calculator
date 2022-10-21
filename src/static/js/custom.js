@@ -158,26 +158,22 @@ initialProgress();
 const getLocation = () => {
     return new Promise((resolve) => 
         navigator.geolocation.getCurrentPosition(resolve)
-    ).then(suc => success(suc)) //odstranit radek
-}
-
-function success(pos) {
-    const crd = pos.coords;
-    const position = new Object();
-    position.lat = crd.latitude;
-    position.lng = crd.longitude;
-    return position; //presunout do timeData(), success() smazat
-}
-
-function error(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+    )
 }
 
 const timeData = async () => {
     try {
         const location = await getLocation();
-        const locLat = location.lat;
-        const locLng = location.lng;
+        const locInfo = (pos) => {
+            const crd = pos.coords;
+            const position = {
+                lat: crd.latitude,
+                lng: crd.longitude
+            }
+            return position;
+        }
+        const locLat = locInfo(location).lat;
+        const locLng = locInfo(location).lng;
         const url = `https://api.sunrise-sunset.org/json?lat=${locLat}&lng=${locLng}&formatted=0&date=today`
         //console.log(url)
         const response = await fetch(url);
