@@ -156,14 +156,12 @@ timer.addEventListener('input', initialProgress);
 initialProgress();
 
 //Get position variables
-/*
+
 function success(pos) {
     const crd = pos.coords;
     const position = new Object();
     position.lat = crd.latitude;
     position.lng = crd.longitude;
-    console.log(position)
-
     return position;
 }
 
@@ -171,17 +169,23 @@ function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
-navigator.geolocation.getCurrentPosition(success, error);
-*/
-
-const locLat = 50.085888;
-const locLng = 14.4146432;
-const loc = `lat=${locLat}&lng=${locLng}`
-const url = 'https://api.sunrise-sunset.org/json?';
-const finalurl = `${url}${loc}&formatted=0&date=today`;
+const getLocation = () => {
+    return new Promise((resolve) => 
+        navigator.geolocation.getCurrentPosition(resolve)
+    ).then(suc => success(suc))
+}
 
 const timeData = async() => {
     try {
+        const location = await getLocation()
+        const locLat = await location.lat;
+        const locLng = await location.lng;
+        //console.log(locLat)
+        //console.log(locLng)
+        const loc = `lat=${locLat}&lng=${locLng}`
+        const url = 'https://api.sunrise-sunset.org/json?';
+        const finalurl = `${url}${loc}&formatted=0&date=today`;
+        //console.log(finalurl)
         const response = await fetch(finalurl);
         if (response.ok) {
           const jsonResponse = await response.json();
@@ -189,7 +193,7 @@ const timeData = async() => {
           const sunrise = data.results.sunrise;
           const sunset = data.results.sunset;
 
-          const localTime = new Date();
+          const localTime = new Date(); //fake date
           const localTimeJSON = new Date(localTime.getTime() - (localTime.getTimezoneOffset() * 60000)).toJSON();
 
             if (localTimeJSON < sunrise) {
@@ -211,9 +215,8 @@ const timeData = async() => {
         console.log(error);
       }
 }
+
 timeData();
-
-
 
 //0:00 - sunrise ⚠️ You should wait few hours after getting up before making the first cup of coffee.
 //sunrise - 10:00 ☕ Just now it's an ideal time to have a coffee.
