@@ -155,24 +155,69 @@ btnReset.addEventListener('click', function() {
 timer.addEventListener('input', initialProgress);
 initialProgress();
 
-const localTime = new Date();
-console.log(localTime.getHours());
+//Get position variables
+/*
+function success(pos) {
+    const crd = pos.coords;
+    const position = new Object();
+    position.lat = crd.latitude;
+    position.lng = crd.longitude;
+    console.log(position)
 
-if (localTime.getHours() < 7) {
-    document.getElementById('before-sunrise').style.display = 'block';
-} else if (localTime.getHours() < 10) {
-    document.getElementById('after-sunrise').style.display = 'block';
-} else if (localTime.getHours() < 16) {
-    document.getElementById('during-day').style.display = 'block';
-} else if (localTime.getHours() < 19) {
-    document.getElementById('before-sunset').style.display = 'block';
-} else {
-    document.getElementById('after-sunset').style.display = 'block';
+    return position;
 }
 
+function error(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+}
 
-//0:00 - 7:00 ⚠️ You should wait few hours after getting up before making the first cup of coffee.
-//7:00 - 10:00 ☕ Just now it's an ideal time to have a coffee.
+navigator.geolocation.getCurrentPosition(success, error);
+*/
+
+const locLat = 50.085888;
+const locLng = 14.4146432;
+const loc = `lat=${locLat}&lng=${locLng}`
+const url = 'https://api.sunrise-sunset.org/json?';
+const finalurl = `${url}${loc}&formatted=0&date=today`;
+
+const timeData = async() => {
+    try {
+        const response = await fetch(finalurl);
+        if (response.ok) {
+          const jsonResponse = await response.json();
+          const data = jsonResponse;
+          const sunrise = data.results.sunrise;
+          const sunset = data.results.sunset;
+
+          const localTime = new Date();
+          const localTimeJSON = new Date(localTime.getTime() - (localTime.getTimezoneOffset() * 60000)).toJSON();
+
+            if (localTimeJSON < sunrise) {
+                document.getElementById('before-sunrise').style.display = 'block';
+            } else if (localTime.getHours() < 10) {
+                document.getElementById('after-sunrise').style.display = 'block';
+            } else if (localTime.getHours() < 16) {
+                document.getElementById('during-day').style.display = 'block';
+            } else if (localTimeJSON < sunset) {
+                document.getElementById('before-sunset').style.display = 'block';
+            } else {
+                document.getElementById('after-sunset').style.display = 'block';
+            }
+            console.log(sunrise);
+            console.log(sunset);
+            console.log(localTimeJSON);
+            }
+      } catch (error) {
+        console.log(error);
+      }
+}
+timeData();
+
+
+
+//0:00 - sunrise ⚠️ You should wait few hours after getting up before making the first cup of coffee.
+//sunrise - 10:00 ☕ Just now it's an ideal time to have a coffee.
 //10:00 - 16:00 ☕ You're fine having a coffee now.
-//16:00 - 19:00 ⚠️ Beware, you shouldn't drink coffee at least 6 hours before sleep.
-//19:00 - 24:00 ❌ It's already night, you definitely shouldn't be drinking coffee now.
+//16:00 - sunset ⚠️ Beware, you shouldn't drink coffee at least 6 hours before sleep.
+//sunset - 24:00 ❌ It's already night, you definitely shouldn't be drinking coffee now.
+
