@@ -155,65 +155,59 @@ btnReset.addEventListener('click', function() {
 timer.addEventListener('input', initialProgress);
 initialProgress();
 
-//Get position variables
+const getLocation = () => {
+    return new Promise((resolve) => 
+        navigator.geolocation.getCurrentPosition(resolve)
+    ).then(suc => success(suc)) //odstranit radek
+}
 
 function success(pos) {
     const crd = pos.coords;
     const position = new Object();
     position.lat = crd.latitude;
     position.lng = crd.longitude;
-    return position;
+    return position; //presunout do timeData(), success() smazat
 }
 
 function error(err) {
     console.warn(`ERROR(${err.code}): ${err.message}`);
 }
 
-const getLocation = () => {
-    return new Promise((resolve) => 
-        navigator.geolocation.getCurrentPosition(resolve)
-    ).then(suc => success(suc))
-}
-
-const timeData = async() => {
+const timeData = async () => {
     try {
-        const location = await getLocation()
-        const locLat = await location.lat;
-        const locLng = await location.lng;
-        //console.log(locLat)
-        //console.log(locLng)
-        const loc = `lat=${locLat}&lng=${locLng}`
-        const url = 'https://api.sunrise-sunset.org/json?';
-        const finalurl = `${url}${loc}&formatted=0&date=today`;
-        //console.log(finalurl)
-        const response = await fetch(finalurl);
+        const location = await getLocation();
+        const locLat = location.lat;
+        const locLng = location.lng;
+        const url = `https://api.sunrise-sunset.org/json?lat=${locLat}&lng=${locLng}&formatted=0&date=today`
+        //console.log(url)
+        const response = await fetch(url);
         if (response.ok) {
-          const jsonResponse = await response.json();
-          const data = jsonResponse;
-          const sunrise = data.results.sunrise;
-          const sunset = data.results.sunset;
+            const jsonResponse = await response.json();
+            const data = jsonResponse;
+            const sunrise = new Date(data.results.sunrise);
+            const sunset = new Date(data.results.sunset);
 
-          const localTime = new Date(); //fake date
-          const localTimeJSON = new Date(localTime.getTime() - (localTime.getTimezoneOffset() * 60000)).toJSON();
-
-            if (localTimeJSON < sunrise) {
+            const localTime = new Date();
+            //const localTime = new Date('2022-10-21T07:34:00');
+            if (localTime < sunrise) {
                 document.getElementById('before-sunrise').style.display = 'block';
             } else if (localTime.getHours() < 10) {
                 document.getElementById('after-sunrise').style.display = 'block';
             } else if (localTime.getHours() < 16) {
                 document.getElementById('during-day').style.display = 'block';
-            } else if (localTimeJSON < sunset) {
+            } else if (localTime < sunset) {
                 document.getElementById('before-sunset').style.display = 'block';
             } else {
                 document.getElementById('after-sunset').style.display = 'block';
             }
-            console.log(sunrise);
-            console.log(sunset);
-            console.log(localTimeJSON);
-            }
-      } catch (error) {
+
+            //console.log(sunrise);
+            //console.log(sunset);
+            //console.log(localTime);
+        }
+    } catch (error) {
         console.log(error);
-      }
+    }
 }
 
 timeData();
@@ -223,4 +217,3 @@ timeData();
 //10:00 - 16:00 ☕ You're fine having a coffee now.
 //16:00 - sunset ⚠️ Beware, you shouldn't drink coffee at least 6 hours before sleep.
 //sunset - 24:00 ❌ It's already night, you definitely shouldn't be drinking coffee now.
-
