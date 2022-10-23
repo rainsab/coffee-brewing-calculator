@@ -10,60 +10,74 @@
     </head>
     <body>
         <main class="container">
-        <h1>Coffee brewing calculator</h1>
-            <div class="row mb-3">
+        <h1 class="mt-4">Coffee brewing calculator</h1>
+            <div class="row mb-2">
                 <div class="col">
-                    <div class="group">
-                        <label for="beans">Coffee beans</label>
-                        <input type='number' id="beans" value="8" min=''><span class="ps-1">g</span>
+                    <label for="beans">Coffee beans</label>
+                    <div class="input-group">
+                        <input type='number' id="beans" value="8" min='' class="form-control">
+                        <div class="input-group-append">
+                            <span class="input-group-text">g</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col">
-                    <div class="group">
-                        <label for="water">Water</label>
-                        <input type='number' id="water" value="128" min=''><span class="ps-1">ml</span>
+                    <label for="water">Water</label>
+                    <div class="input-group">
+                        <input type='number' id="water" value="128" min='' class="form-control">
+                        <div class="input-group-append">
+                            <span class="input-group-text">ml</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col">
-                    <div class="group">
-                        <label for="ratio">Ratio</label>
-                        <input type='number' id="ratio" value="16" min=''><span class="ps-1">: 1</span>
+                    <label for="ratio">Ratio</label>
+                    <div class="input-group">
+                        <input type='number' id="ratio" value="16" min='' class="form-control">
+                        <div class="input-group-append">
+                            <span class="input-group-text">: 1</span>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col">
-                    <div class="group">
-                        <label for="yield">Coffee yield</label>
-                        <input type='number' id="yield" value="115.2" min=''><span class="ps-1">ml</span>
+                    <label for="yield">Coffee yield</label>
+                    <div class="input-group">
+                        <input type='number' id="yield" value="115.2" min='' class="form-control">
+                        <div class="input-group-append">
+                            <span class="input-group-text">: 1</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="row mb-3">
-                <div class="col">
-                    <div class="group">
-                        <label for="timer">Timer</label>
-                        <input type='number' id="timer" value="0.5" min='0'><span class="ps-1">min</span>
+                <div class="col mb-1">
+                    <label for="timer">Timer</label>
+                    <div class="input-group">
+                        <input type='number' id="timer" value="0.5" min='0' class="form-control">
+                        <div class="input-group-append">
+                            <span class="input-group-text">min</span>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col">
-                    <div class="group input-group">
-                        <label for="timer-transfer"></label>
-                        <input disabled type='text' id="timer-transfer">
-                            <div class="buttons">
+                <div class="col-md-6 align-self-end mb-1">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <input readonly type='text' id="timer-transfer" class="form-control">
                                 <button type="button" id="start" class="btn btn-success">Start</button>
                                 <button type="button" id="stop" class="btn btn-danger">Stop</button>
                                 <button type="button" id="reset" class="btn btn-dark">Reset</button>
-                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="col">
-                    <div class="group">
-                        <div class="progress" style="height: 30px;">       
+                <div class="col-sm-3 align-self-end mb-1">
+                    <div class="form-group">
+                        <div class="progress" style="height: 38px;">       
                             <div id="progressbar" class="progress-bar" role="progressbar" style="width: 0%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
