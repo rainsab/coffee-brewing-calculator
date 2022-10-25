@@ -164,18 +164,10 @@ const getLocation = () => {
 const timeData = async () => {
     try {
         const location = await getLocation();
-        const locInfo = (pos) => {
-            const crd = pos.coords;
-            const position = {
-                lat: crd.latitude,
-                lng: crd.longitude
-            }
-            return position;
-        }
-        const locLat = locInfo(location).lat;
-        const locLng = locInfo(location).lng;
+        const locLat = location.coords.latitude;
+        const locLng = location.coords.longitude;
         const url = `https://api.sunrise-sunset.org/json?lat=${locLat}&lng=${locLng}&formatted=0&date=today`
-        //console.log(url)
+        console.log(url)
         const response = await fetch(url);
         if (response.ok) {
             const jsonResponse = await response.json();
